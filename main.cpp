@@ -13,7 +13,9 @@ int main() {
 
     hiddenModel hmm = hiddenModel(H, L);
 
-    string s = "a";
+    string s = "aggatc";
+
+    Matrix m = Matrix(s, hmm);
 
     return 0;
 }
@@ -43,7 +45,6 @@ double calculate(string s, int index, model m) {
         return emission * m.init;
     }
 
-//    return calculate(s, index-1, m);
 }
 
 

@@ -18,4 +18,23 @@ Matrix::Matrix(std::string seq, hiddenModel hmm) : seq(seq), hmm(hmm) {
 }
 
 
+// populate a default matrix
 
+void Matrix::populate() {
+
+    for (int i = 0; i <= seq.size(); i++) {
+        std::vector<double> row;
+        for (int j = 0; j <= 2; j++) {
+
+            double score = -1;
+            if (i == 0 and j == 0) {
+                score = 1;
+            } else if (i == 0 or j == 0) {
+                score = 0;
+            }
+            row.push_back(score);
+        }
+        table.push_back(row);
+    }
+
+}
