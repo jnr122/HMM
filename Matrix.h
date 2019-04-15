@@ -7,13 +7,11 @@
 
 #include <vector>
 #include <string>
-
-using namespace std;
+#include <ostream>
 
 struct model {
     double a, c, g, t, self, transition, init;
-
-    string name;
+    std::string name;
 
     /***
      * Model constructor
@@ -24,7 +22,7 @@ struct model {
      * @param selfWeight
      * @param transitionWeight
      */
-    model(double a, double c, double g, double t, double self, double transition, double init, string name);
+    model(double a, double c, double g, double t, double self, double transition, double init, std::string name);
 
 };
 
@@ -46,8 +44,47 @@ private:
     std::vector<std::vector<double>> table;
     std::string seq;
     hiddenModel hmm;
+    double forwardProb;
+
+    /***
+     * Get emission probability
+     * @param s
+     * @param m
+     * @return
+     */
+    double getEmission(char s, model m);
+
+    /***
+     * Populate default matrix for viterbi algorithm
+     */
+    void populate();
+
+    /***
+     * Recursive calculations
+     * @param m
+     * @param index
+     * @return f(i)
+     */
+    double computeForward(model m, int index);
+
+    /***
+     * Table calculations
+     * @param m
+     * @param index
+     * @return nothing, fill table
+     */
+    double computeViterbi(model m, int index);
+
+    /***
+     * Get max
+     * @param d1
+     * @param d2
+     * @return max arg
+     */
+    double argMax(double d1, double d2);
 
 public:
+
     /***
      * Matrix constructor
      * @param seq
@@ -55,10 +92,12 @@ public:
      */
     Matrix(std::string seq, hiddenModel hmm);
 
-    /***
-     * Populate default matrix
-     */
-    void populate();
+
+    // getters
+    double getForwardProb() const;
+
+    friend std::ostream &operator<<(std::ostream &os, const Matrix &matrix);
+
 
 };
 
