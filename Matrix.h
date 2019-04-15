@@ -8,8 +8,12 @@
 #include <vector>
 #include <string>
 
+using namespace std;
+
 struct model {
     double a, c, g, t, self, transition, init;
+
+    string name;
 
     /***
      * Model constructor
@@ -20,20 +24,20 @@ struct model {
      * @param selfWeight
      * @param transitionWeight
      */
-    model(double a, double c, double g, double t, double self, double transition, double init);
+    model(double a, double c, double g, double t, double self, double transition, double init, string name);
 
 };
 
 struct hiddenModel {
-    model m1;
-    model m2;
+    model H;
+    model L;
 
     /***
      * Hidden model constructor
      * @param m1
      * @param m2
      */
-    hiddenModel(model m1, model m2);
+    hiddenModel(model H, model L);
 };
 
 
