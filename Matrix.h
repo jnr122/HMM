@@ -42,9 +42,10 @@ struct hiddenModel {
 class Matrix {
 private:
     std::vector<std::vector<double>> table;
-    std::string seq;
+    std::string seq, probablePath;
     hiddenModel hmm;
-    double forwardProb;
+    double forwardProb, probOfProbPath, backwardProb, posteriorProb;
+    bool multiplePaths;
 
     /***
      * Get emission probability
@@ -83,6 +84,25 @@ private:
      */
     double argMax(double d1, double d2);
 
+    /***
+     * Use viterbi table to compute most probable path
+     * @return most probable path
+     */
+    std::string computeProbablePath();
+
+    /***
+     * @return the probability of the most probable path
+     */
+    double computeProbOfProbPath();
+
+    /***
+     * Backward algorithm
+     * @param m
+     * @param index
+     * @return b(i)
+     */
+    double computeBackward(model m, int index, int max);
+
 public:
 
     /***
@@ -92,11 +112,11 @@ public:
      */
     Matrix(std::string seq, hiddenModel hmm);
 
+    friend std::ostream &operator<<(std::ostream &os, const Matrix &matrix);
 
     // getters
     double getForwardProb() const;
-
-    friend std::ostream &operator<<(std::ostream &os, const Matrix &matrix);
+    const std::string &getProbablePath() const;
 
 
 };
